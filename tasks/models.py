@@ -1,5 +1,4 @@
 from django.db import models
-from django.contrib.auth.models import AbstractUser
 
 
 class Tag(models.Model):
@@ -19,7 +18,10 @@ class Task(models.Model):
         related_name="tasks",
     )
 
+    class Meta:
+        ordering = ["is_completed", "-datetime"]
+
     def __str__(self):
         return (
-            f"{self.content}, tags: {self.tags.objects.all()}"
+            f"{self.content}, tags: {', '.join(tag.name for tag in self.tags.all())}"
         )

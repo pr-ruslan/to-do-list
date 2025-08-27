@@ -18,7 +18,6 @@ app_name = 'tasks'
 
 
 task_patterns = [
-    path('', TaskListView.as_view(), name='task-list'),
     path('<int:pk>/', TaskDetailView.as_view(), name='task-detail'),
     path('<int:pk>/delete/', TaskDeleteView.as_view(), name='task-delete'),
     path('<int:pk>/edit/', TaskUpdateView.as_view(), name='task-edit'),
@@ -35,7 +34,7 @@ tag_patterns = [
 ]
 
 urlpatterns = [
-    path('', index, name='index'),
+    path('', TaskListView.as_view(), name='index'),
     path("accounts/", include("django.contrib.auth.urls")),
     path('tasks/', include(task_patterns)),
     path('tags/', include(tag_patterns)),
