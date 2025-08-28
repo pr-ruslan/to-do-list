@@ -1,0 +1,84 @@
+[
+  {
+    "model": "tasks.tag",
+    "pk": 1,
+    "fields": {
+      "name": "Work"
+    }
+  },
+  {
+    "model": "tasks.tag",
+    "pk": 2,
+    "fields": {
+      "name": "Personal"
+    }
+  },
+  {
+    "model": "tasks.tag",
+    "pk": 3,
+    "fields": {
+      "name": "Shopping"
+    }
+  },
+  {
+    "model": "tasks.tag",
+    "pk": 4,
+    "fields": {
+      "name": "Health"
+    }
+  },
+  {
+    "model": "tasks.task",
+    "pk": 1,
+    "fields": {
+      "content": "Finish project report",
+      "datetime": "2025-08-27T12:00:00Z",
+      "deadline": "2025-09-01T18:00:00Z",
+      "is_completed": false,
+      "tags": [
+        1,
+        2
+      ]
+    }
+  },
+  {
+    "model": "tasks.task",
+    "pk": 2,
+    "fields": {
+      "content": "Buy groceries",
+      "datetime": "2025-08-27T13:00:00Z",
+      "deadline": "2025-08-28T10:00:00Z",
+      "is_completed": false,
+      "tags": [
+        3
+      ]
+    }
+  },
+  {
+    "model": "tasks.task",
+    "pk": 3,
+    "fields": {
+      "content": "Go for a run",
+      "datetime": "2025-08-27T08:00:00Z",
+      "deadline": "2025-08-27T20:00:00Z",
+      "is_completed": true,
+      "tags": [
+        4
+      ]
+    }
+  },
+  {
+    "model": "tasks.task",
+    "pk": 4,
+    "fields": {
+      "content": "Book dentist appointment",
+      "datetime": "2025-08-26T15:00:00Z",
+      "deadline": "2025-08-30T09:00:00Z",
+      "is_completed": false,
+      "tags": [
+        2,
+        4
+      ]
+    }
+  }
+]

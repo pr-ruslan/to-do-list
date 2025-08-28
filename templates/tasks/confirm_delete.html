@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <h1>You are on your way to delete {{ name }}</h1>
+    <p>Are you sure you want to delete it?</p>
+
+    <div class="delete-card">
+        {% if object.content %}
+            <p><strong>Task:</strong> {{ object.content }}</p>
+            <p><strong>Deadline:</strong> {{ object.deadline|default:"—" }}</p>
+            <p><strong>Status:</strong> 
+                {% if object.is_completed %} ✅ Completed {% else %} ⏳ Not Completed {% endif %}
+            </p>
+        {% elif object.name %}
+            <p><strong>Tag:</strong> {{ object.name }}</p>
+        {% endif %}
+    </div>
+
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Yes, delete</button>
+        <a href="{% if object.content %}{% url 'tasks:task-detail' object.pk %}{% else %}{% url 'tasks:tag-detail' object.pk %}{% endif %}" 
+           class="btn btn-secondary">
+           Cancel
+        </a>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <h1>Tag: {{ tag.name }}</h1>
+
+    <div class="actions">
+        <a href="{% url 'tasks:tag-edit' tag.pk %}" class="btn btn-primary">Edit</a>
+        <a href="{% url 'tasks:tag-delete' tag.pk %}" class="btn btn-danger">Delete</a>
+    </div>
+
+    <h2>Tasks with this tag:</h2>
+    {% if tag.tasks.all %}
+        <ul class="task-list">
+            {% for task in tag.tasks.all %}
+                <li class="task-card {% if task.is_completed %}completed{% endif %}">
+                    <p><strong>Content:</strong> {{ task.content }}</p>
+                    <p><strong>Created:</strong> {{ task.datetime }}</p>
+                    <p><strong>Deadline:</strong> {{ task.deadline|default:"—" }}</p>
+                    <p><strong>Status:</strong> 
+                        {% if task.is_completed %} ✅ Completed {% else %} ⏳ Not Completed {% endif %}
+                    </p>
+                    <a href="{% url 'tasks:task-detail' task.pk %}" class="btn btn-info">View</a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No tasks with this tag yet.</p>
+    {% endif %}
+</div>
+{% endblock %}

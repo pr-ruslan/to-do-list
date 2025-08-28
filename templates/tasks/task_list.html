@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% load static %}
+
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<h1>📝 Todo List</h1>
+
+<a href="{% url 'tasks:task-add' %}" class="btn btn-add">➕ Add New Task</a>
+
+<ul class="task-list">
+  {% for task in tasks %}
+    <li class="task-item">
+      <p><a href="{% url 'tasks:task-detail' task.pk %}"><h3>{{ task.content }}</h3></a></p>
+      <p><strong>Created:</strong> {{ task.datetime }}</p>
+      <p><strong>Deadline:</strong> {{ task.deadline|default:"No deadline" }}</p>
+      <p><strong>Status:</strong>
+         {% if task.is_completed %}✅ Completed{% else %}❌ Not Done{% endif %}
+      </p>
+      <p><strong>Tags:</strong>
+         {% for tag in task.tags.all %}
+           <span class="tag">{{ tag.name }}</span>
+         {% empty %}
+           No tags
+         {% endfor %}
+      </p>
+
+      <!-- Action buttons -->
+      <a href="{% url 'tasks:task-edit' task.pk %}" class="btn btn-edit">✏️ Edit</a>
+      <a href="{% url 'tasks:task-delete' task.pk %}" class="btn btn-delete">🗑️ Delete</a>
+      <a href="{% url 'tasks:task-toggle' task.pk %}" class="btn btn-toggle">
+        {% if task.is_completed %}🔄 Undo{% else %}✅ Complete{% endif %}
+      </a>
+    </li>
+  {% empty %}
+    <li>No tasks available.</li>
+  {% endfor %}
+</ul>
+{% endblock %}
