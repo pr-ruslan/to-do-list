@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <h2>Task Details:</h2>
+
+    <div class="task-card {% if task.is_completed %}completed{% endif %}">
+        <p><strong>Content:</strong> {{ task.content }}</p>
+        <p><strong>Created:</strong> {{ task.datetime }}</p>
+        <p><strong>Deadline:</strong> {{ task.deadline|default:"—" }}</p>
+        <p><strong>Status:</strong> 
+            {% if task.is_completed %}
+                ✅ Completed
+            {% else %}
+                ⏳ Not Completed
+            {% endif %}
+        </p>
+        <p><strong>Tags:</strong> 
+            {% for tag in task.tags.all %}
+                <span class="tag">{{ tag.name }}</span>
+            {% empty %}
+                No tags
+            {% endfor %}
+        </p>
+    </div>
+
+    <div class="actions">
+        <a href="{% url 'tasks:task-edit' task.pk %}" class="btn">Edit</a>
+        <a href="{% url 'tasks:task-delete' task.pk %}" class="btn btn-danger">Delete</a>
+
+        {% if task.is_completed %}
+            <a href="{% url 'tasks:task-toggle' task.pk %}" class="btn btn-warning">Undo</a>
+        {% else %}
+            <a href="{% url 'tasks:task-toggle' task.pk %}" class="btn btn-success">Complete</a>
+        {% endif %}
+
+        <a href="{% url 'tasks:index' %}" class="btn btn-secondary">Back to List</a>
+    </div>
+</div>
+{% endblock %}

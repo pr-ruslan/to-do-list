@@ -1,6 +1,5 @@
 from django.urls import path, include
 from .views import (
-    index,
     TaskListView,
     TagListView,
     TaskDetailView,
@@ -10,7 +9,7 @@ from .views import (
     TaskUpdateView,
     TagUpdateView,
     TaskDeleteView,
-    TagDeleteView
+    TagDeleteView, toggle_task_status
 )
 
 
@@ -21,7 +20,8 @@ task_patterns = [
     path('<int:pk>/', TaskDetailView.as_view(), name='task-detail'),
     path('<int:pk>/delete/', TaskDeleteView.as_view(), name='task-delete'),
     path('<int:pk>/edit/', TaskUpdateView.as_view(), name='task-edit'),
-    path('<int:pk>/add/', TaskCreateView.as_view(), name='task-add'),
+    path('add/', TaskCreateView.as_view(), name='task-add'),
+    path('<int:pk>/toggle/', toggle_task_status, name='task-toggle'),
 ]
 
 

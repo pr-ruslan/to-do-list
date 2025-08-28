@@ -1,17 +1,23 @@
 from django.shortcuts import render
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
+from django.shortcuts import redirect, get_object_or_404
 
 
 from .models import Task, Tag
-
-def index(request):
-    return render(request, 'tasks/index.html')
 
 
 class TaskListView(ListView):
     model = Task
     template_name = "tasks/task_list.html"
+    context_object_name = "tasks"
+
+
+def toggle_task_status(request, pk):
+    task = get_object_or_404(Task, pk=pk)
+    task.is_completed = not task.is_completed
+    task.save()
+    return redirect(reverse("tasks:index"))
 
 
 class TagListView(ListView):
@@ -23,7 +29,7 @@ class TagListView(ListView):
 class TaskCreateView(CreateView):
     model = Task
     fields = ["content", "deadline", "is_completed", "tags"]
-    success_url = "/tasks/"
+    success_url = "/"
 
 class TagCreateView(CreateView):
     model = Tag
@@ -34,7 +40,7 @@ class TagCreateView(CreateView):
 class TaskUpdateView(UpdateView):
     model = Task
     fields = ["content", "deadline", "is_completed", "tags"]
-    success_url = "/tasks/"
+    success_url = "/"
 
 class TagUpdateView(UpdateView):
     model = Tag
